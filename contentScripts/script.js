@@ -41,8 +41,14 @@ const stepByStep = actionTuples.forEach(function (actionTuple) {
         break;
     }
     if (el !== null) {
-      // mark outline as red
-      el.style.outline = "10px solid rgba(255,0,0,0.7)"; // outline 빨간색
+      el.className += "target-tag-red";
+      setInterval(addClassName, 500, el);
     }
   }
 });
+
+function addClassName(el) {
+  console.log("add class name");
+  el.classList.toggle("target-tag-red");
+  el.classList.toggle("target-tag-blue");
+}
