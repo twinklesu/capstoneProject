@@ -16,6 +16,7 @@ let actionTuples = [
   // ["click", "id=tmp_submit"],
 ];
 
+// document.getElementById("start").onclick = 함수이름
 const stepByStep = actionTuples.forEach(function (actionTuple) {
   const action = actionTuple[0];
   const target = actionTuple[1];

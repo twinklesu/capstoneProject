@@ -1,8 +1,12 @@
 {
   "name": "New Chrome Extension",
-  "description": "Made by Subin",
+  "description": "Capstone project",
   "version": "1.0",
   "manifest_version": 3,
+  "action": {
+    "default_popup" : "popup.html"
+
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -10,5 +14,7 @@
       "css": ["./contentScripts/style.css"],
       "run_at": "document_end"
     }
+    
   ]
+  
 }
