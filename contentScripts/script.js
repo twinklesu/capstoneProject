@@ -16,12 +16,6 @@ let actionTuples = [
   ["click", "id=tmp_submit"],
 ];
 
-<<<<<<< HEAD
-// document.getElementById("start").onclick = 함수이름
-
-
-const stepByStep = actionTuples.forEach(function (actionTuple) {
-=======
 function moveForward(feature, pointer) {
   feature = actionTuples; // 나중엔 피쳐 선택 가능해야함
   if (pointer === length(feature) - 1) {
@@ -40,7 +34,6 @@ function moveBackward(feature, pointer) {
 }
 
 function generateShape(actionTuple) {
->>>>>>> c9af18ccff2566160b5c9262925d9c724e4b48b1
   const action = actionTuple[0];
   const target = actionTuple[1];
   if (action === "click") {
