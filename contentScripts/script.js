@@ -1,22 +1,39 @@
 let actionTuples = [
   ["click", "linkText=응답소"],
-  // ["click", "linkText=민원신청"],
-  // ["click", "linkText=작성하기"],
-  // ["click", "linkText=신청하기"],
-  // ["click", "id=CN"],
-  // ["type", "id=CN"],
-  // ["click", "id=tmp_submit"],
-  // ["assertAlert", "민원발생지역을 선택해 주세요."],
-  // ["click", "id=CVPL_OCCRRNC_AREA"],
-  // ["select", "id=CVPL_OCCRRNC_AREA"],
-  // ["click", "id=SJ"],
-  // ["type", "id=SJ"],
-  // ["click", "id=PERSON_INFO_YN"],
-  // ["chooseOkOnNextConfirmation", ""],
-  // ["click", "id=tmp_submit"],
+  ["click", "linkText=민원신청"],
+  ["click", "linkText=작성하기"],
+  ["click", "linkText=신청하기"],
+  ["click", "id=CN"],
+  ["type", "id=CN"],
+  ["click", "id=tmp_submit"],
+  ["assertAlert", "민원발생지역을 선택해 주세요."],
+  ["click", "id=CVPL_OCCRRNC_AREA"],
+  ["select", "id=CVPL_OCCRRNC_AREA"],
+  ["click", "id=SJ"],
+  ["type", "id=SJ"],
+  ["click", "id=PERSON_INFO_YN"],
+  ["chooseOkOnNextConfirmation", ""],
+  ["click", "id=tmp_submit"],
 ];
 
-const stepByStep = actionTuples.forEach(function (actionTuple) {
+function moveForward(feature, pointer) {
+  feature = actionTuples; // 나중엔 피쳐 선택 가능해야함
+  if (pointer === length(feature) - 1) {
+    return alert("튜토리얼을 완료했습니다!");
+  }
+  pointer += 1;
+  return generateShape(feature[pointer]);
+}
+
+function moveBackward(feature, pointer) {
+  if (pointer === 0) {
+    return alert("첫번째 과정입니다");
+  }
+  pointer -= 1;
+  return generateShape(feature[pointer]);
+}
+
+function generateShape(actionTuple) {
   const action = actionTuple[0];
   const target = actionTuple[1];
   if (action === "click") {
@@ -45,7 +62,7 @@ const stepByStep = actionTuples.forEach(function (actionTuple) {
       setInterval(addClassName, 500, el);
     }
   }
-});
+}
 
 function addClassName(el) {
   console.log("add class name");
