@@ -17,6 +17,10 @@ let actionTuples = [
 ];
 
 // document.getElementById("start").onclick = 함수이름
+function hi() {
+  console.log('hi');
+}
+
 const stepByStep = actionTuples.forEach(function (actionTuple) {
   const action = actionTuple[0];
   const target = actionTuple[1];
