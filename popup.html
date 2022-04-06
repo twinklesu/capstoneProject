@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko" xml:lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <style>
-            BODY {width: 250px; min-height: 250px;}
-        </style>
-        <script src="./contentScripts/test.js"></script>
-        <script src="./contentScripts/script.js"></script>
-    </head>
-    <body>
-        <div>
-            <h2 id="title">Welcome to Webigation!</h2>
-            <button id="start" style="display: block; width: 150; text-align: center;">튜토리얼 시작!</button>
-            <button id="pre">이전 단계</button>
-            <button id="next">다음 단계</button>
-            <button id="next" style="display: block; width: 150; text-align: center;">튜토리얼 종료</button>
-            
-        </div>
-    </body>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style>
+      BODY {
+        width: 250px;
+        min-height: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="popup.js"></script>
+    <div>
+      <h2 id="title">Welcome to Webigation!</h2>
+      <button
+        type="button"
+        id="start"
+        style="display: block; width: 150; text-align: center"
+      >
+        튜토리얼 시작!
+      </button>
+      <button id="pre">이전 단계</button>
+      <button id="next">다음 단계</button>
+      <button id="end" style="display: block; width: 150; text-align: center">
+        튜토리얼 종료
+      </button>
+    </div>
+  </body>
 </html>

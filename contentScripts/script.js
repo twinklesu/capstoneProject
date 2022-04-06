@@ -16,14 +16,14 @@ let actionTuples = [
   ["click", "id=tmp_submit"],
 ];
 
-function moveForward(feature, pointer) {
+const moveForward = function (feature, pointer) {
   feature = actionTuples; // 나중엔 피쳐 선택 가능해야함
   if (pointer === length(feature) - 1) {
     return alert("튜토리얼을 완료했습니다!");
   }
   pointer += 1;
   return generateShape(feature[pointer]);
-}
+};
 
 function moveBackward(feature, pointer) {
   if (pointer === 0) {
@@ -69,3 +69,10 @@ function addClassName(el) {
   el.classList.toggle("target-tag-red");
   el.classList.toggle("target-tag-blue");
 }
+
+// contentscript.js
+chrome.runtime.onMessage.addListener(function (msg, sender) {
+  if (msg.filter == "author") {
+    alert("successsss");
+  }
+});

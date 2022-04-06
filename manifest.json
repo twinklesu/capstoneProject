@@ -1,21 +1,17 @@
 {
-  "name": "New Chrome Extension",
+  "name": "Webigation",
   "description": "Capstone project",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup" : "popup.html"
-
+    "default_popup": "popup.html"
   },
-  
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["./contentScripts/script.js", "./contentScripts/test.js"],
+      "js": ["./contentScripts/script.js"],
       "css": ["./contentScripts/style.css"],
       "run_at": "document_end"
     }
-    
   ]
-  
 }
