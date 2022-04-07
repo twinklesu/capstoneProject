@@ -1,3 +1,5 @@
+console.log("in content script");
+
 let actionTuples = [
   ["click", "linkText=응답소"],
   ["click", "linkText=민원신청"],
@@ -69,10 +71,3 @@ function addClassName(el) {
   el.classList.toggle("target-tag-red");
   el.classList.toggle("target-tag-blue");
 }
-
-// contentscript.js
-chrome.runtime.onMessage.addListener(function (msg, sender) {
-  if (msg.filter == "author") {
-    alert("successsss");
-  }
-});
