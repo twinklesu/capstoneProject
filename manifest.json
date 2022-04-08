@@ -10,6 +10,12 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "nativeMessaging", "scripting", "activeTab"],
+  "permissions": [
+    "tabs",
+    "nativeMessaging",
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
   "host_permissions": ["http://*/", "https://*/"]
 }
