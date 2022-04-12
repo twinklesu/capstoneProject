@@ -5,7 +5,7 @@ $(function () {
   });
   $("#pre").on("click", function () {
     console.log("on click pre");
-    print("pre");
+    ping("pre");
   });
   $("#next").on("click", function () {
     console.log("on click next");
@@ -18,5 +18,9 @@ $(function () {
 });
 
 function ping(msg) {
-  chrome.runtime.sendMessage({ action: msg }, (response) => {});
+  chrome.runtime.sendMessage({ action: msg }, (response) => {
+    if (msg === "end") {
+      alert("종료합니다!");
+    }
+  });
 }
