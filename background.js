@@ -12,6 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function getActionTuple(action) {
+  var returnCode = 0;
   getStorage(); // get storage stored data
   setTimeout(function () {
     switch (action) {
@@ -31,7 +32,9 @@ function getActionTuple(action) {
         // 스토리지 포인터 -1 해서 갱신
         console.log("in pre case");
         if (pointer === 0) {
-          console.log("첫번째 튜토리얼");
+          // alert 띄우기
+          sendMsgToPopup("첫번째 스텝입니다!");
+          return;
         } else {
           pointer -= 1;
           chrome.storage.local.set({ pointer: pointer });
@@ -42,7 +45,7 @@ function getActionTuple(action) {
         // 다음
         // 스토리지 포인터 +1 해서 갱신
         if (pointer === dictObject[featureName].length) {
-          console.log("튜토리얼 완료");
+          sendMsgToPopup("마지막 스텝입니다.\n튜토리얼을 종료해주세요");
         } else {
           pointer += 1;
           chrome.storage.local.set({ pointer: pointer });
@@ -78,6 +81,7 @@ function getActionTuple(action) {
       () => {}
     );
   }, 500);
+  return returnCode;
 }
 
 function getStorage() {
@@ -187,6 +191,13 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
     }
     return newIntervalId;
   }
+}
+
+// send msg to popup
+function sendMsgToPopup(msg) {
+  chrome.runtime.sendMessage({ action: msg }, (response) => {
+    console.log("(msg) back to popup: " + msg);
+  });
 }
 
 // get tab id on load
