@@ -20,7 +20,12 @@ $(function () {
 function ping(msg) {
   chrome.runtime.sendMessage({ action: msg }, (response) => {
     if (msg === "end") {
-      alert("종료합니다!");
+      alert("튜토리얼을 종료합니다!");
     }
   });
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log("get message in popup");
+  alert(request.action);
+});

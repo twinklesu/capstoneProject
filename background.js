@@ -5,6 +5,9 @@ var featureName;
 var feature;
 var intervalId;
 var preActionTuple;
+var scrollPointer = 0;
+
+var imageUrl = chrome.runtime.getURL("scroll_image.png");
 
 // get message from popup when button clicked
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -51,10 +54,11 @@ function getActionTuple(action) {
         // 스토리지 포인터 -1 해서 갱신
         console.log("in pre case");
         if (pointer === 0) {
-          console.log("첫번째 튜토리얼");
+          // alert 띄우기
+          sendMsgToPopup("첫번째 스텝입니다!");
+          return;
         } else {
           pointer -= 1;
-          chrome.storage.local.set({ pointer: pointer });
         }
         break;
       }
@@ -62,10 +66,9 @@ function getActionTuple(action) {
         // 다음
         // 스토리지 포인터 +1 해서 갱신
         if (pointer === dictObject[featureName].length) {
-          console.log("튜토리얼 완료");
+          sendMsgToPopup("마지막 스텝입니다.\n튜토리얼을 종료합니다");
         } else {
           pointer += 1;
-          chrome.storage.local.set({ pointer: pointer });
         }
         break;
       }
@@ -86,18 +89,31 @@ function getActionTuple(action) {
     } else {
       preActionTuple = null;
     }
+    if (pointer < dictObject[featureName].length - 1) {
+      if (actionTuple[0] === "runScript") {
+        // scroll
+        scrollPointer =
+          actionTuple[1].split("(")[1].split(")")[0].split(",")[1] * 1000;
+        pointer += 1;
+        actionTuple = dictObject[featureName][pointer];
+      }
+    }
+
     console.log("actionTuple: " + actionTuple);
     console.log("last interval id: " + intervalId);
+
+    chrome.storage.local.set({ pointer: pointer });
 
     chrome.scripting.executeScript(
       {
         target: { tabId: tabId },
         func: tutorialMain,
-        args: [actionTuple, intervalId, preActionTuple],
+        args: [actionTuple, intervalId, preActionTuple, scrollPointer],
       },
       () => {}
     );
   }, 500);
+  return returnCode;
 }
 
 function getStorage() {
@@ -118,14 +134,24 @@ function getStorage() {
 }
 
 // content script
-function tutorialMain(actionTuple, intervalId, preActionTuple) {
-  console.log("in content script");
+function tutorialMain(actionTuple, intervalId, preActionTuple, scrollPointer) {
+  console.log("(content) scrollPointer: " + scrollPointer);
   // css
   var styles = `
   .target-tag-red {
     outline: rgba(255, 0, 0, 0.7) solid 8px;
     border-radius: 30px;
   }  
+
+  .scroll {
+    font-size: 40px;
+    position: fixed;
+    top: 50%;
+    left: 75%;
+    background-color: rgba(255, 0, 0, 0.7);
+    border-radius: 30px;
+  }
+
   `;
   var styleSheet = document.createElement("style");
   styleSheet.innerText = styles;
@@ -140,6 +166,8 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
     clearInterval(intervalId);
     const action = preActionTuple[0];
     const target = preActionTuple[1];
+
+    // find element
     if (action === "click") {
       console.log(target);
       const tagType = target.split("=")[0];
@@ -162,13 +190,36 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
           break;
       }
     }
+    // pre tutorial remove
     if (el) {
       el.classList.remove("target-tag-red");
+    }
+    var scrollTag = document.getElementById("scroll");
+    if (scrollTag) {
+      document.body.removeChild(scrollTag);
+    }
+
+    // scroll
+    if (scrollPointer !== 0) {
+      console.log("(back) scroll");
+      scroll = window.scrollY - scrollPointer;
+      var div = document.createElement("div");
+      div.setAttribute("id", "scroll");
+      div.classList.add("scroll");
+      if (scroll < 0) {
+        // scroll down
+        var arrowDown = document.createTextNode("⬇️⬇️⬇️");
+        div.appendChild(arrowDown);
+      } else if (scroll > 0) {
+        // scroll up
+        var arrowDown = document.createTextNode("⬆️⬆️⬆️");
+        div.appendChild(arrowDown);
+      }
+      document.body.appendChild(div);
     }
   }
   var newIntervalId = generateShape(actionTuple);
   chrome.storage.local.set({ intervalId: String(newIntervalId) });
-  console.log("storing interval id: " + String(newIntervalId));
 
   // function description
   function addClassName(el) {
@@ -209,6 +260,13 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
   }
 }
 
+// send msg to popup
+function sendMsgToPopup(msg) {
+  chrome.runtime.sendMessage({ action: msg }, (response) => {
+    console.log("(msg) back to popup: " + msg);
+  });
+}
+
 // get tab id on load
 chrome.tabs.onUpdated.addListener(async () => {
   console.log(await getCurrentTab());
@@ -228,9 +286,10 @@ var dictObject = {
     ["click", "linkText=민원신청"],
     ["click", "linkText=작성하기"],
     ["click", "linkText=신청하기"],
-    ["click", "id=CN"],
     ["click", "id=CVPL_OCCRRNC_AREA"],
     ["click", "id=SJ"],
+    ["click", "id=CN"],
+    ["runScript", "window.scrollTo(0,0.6666666865348816)"],
     ["click", "id=PERSON_INFO_YN"],
     ["click", "id=tmp_submit"],
   ],
@@ -244,76 +303,48 @@ var dictObject = {
     ["click", "css=.options:nth-child(8) > .option:nth-child(1) > label"],
     ["click", "id=JS_01"],
     ["click", "linkText=다음단계(4/40)"],
-    ["select", "id=appBirthdayYear"],
     ["click", "id=appBirthdayYear"],
-    ["select", "id=appBirthdayYear"],
     ["click", "id=appBirthdayMonth"],
-    ["select", "id=appBirthdayMonth"],
     ["click", "id=appBirthdayDay"],
-    ["select", "id=appBirthdayDay"],
     ["click", "id=appEmail1"],
-    ["type", "id=appEmail1"],
     ["click", "id=appEmail2"],
-    ["select", "id=appEmail2"],
     ["click", "id=appTelNo2"],
-    ["type", "id=appTelNo2"],
     ["click", "id=appTelNo3"],
-    ["type", "id=appTelNo3"],
     ["click", "id=privateKey1"],
-    ["type", "id=privateKey1"],
     ["click", "id=privateKey2"],
-    ["type", "id=privateKey2"],
     ["click", "id=duplicate"],
     ["selectFrame", "index=0"],
-    ["type", "id=region_name"],
     ["sendKeys", "id=region_name"],
     ["click", "css=.over"],
     ["close", ""],
-    ["type", "id=appAddrDtl"],
     ["click", "linkText=다음단계(4/40)"],
     ["click", "id=file1"],
-    ["type", "id=file1"],
     ["click", "id=file2"],
-    ["type", "id=file2"],
     ["click", "id=file3"],
-    ["type", "id=file3"],
     ["click", "id=file10"],
-    ["type", "id=file10"],
     ["click", "id=workDaycnt1U"],
     ["click", "id=file6Income"],
-    ["type", "id=file6Income"],
     ["click", "id=file6"],
-    ["type", "id=file6"],
     ["click", "id=file11"],
-    ["type", "id=file11"],
     ["click", "css=tr:nth-child(7) > td"],
     ["click", "css=tr:nth-child(7) > td"],
     ["click", "id=file12"],
-    ["type", "id=file12"],
     ["click", "id=mrrgN"],
     ["click", "id=file8Income"],
-    ["type", "id=file8Income"],
     ["click", "id=file8"],
-    ["type", "id=file8"],
     ["click", "id=file9Income"],
-    ["type", "id=file9Income"],
     ["click", "css=.parents:nth-child(14) > td"],
     ["click", "id=file9Income"],
-    ["type", "id=file9Income"],
     ["click", "css=.parents:nth-child(14) > td"],
     ["click", "id=file9Income"],
-    ["type", "id=file9Income"],
     ["click", "id=housingPayN"],
     ["click", "id=housingPayAgrY"],
     ["click", "linkText=다음단계(4/40)"],
     ["click", "id=file9PmarrIncome"],
     ["click", "id=file8Income"],
-    ["type", "id=file8Income"],
     ["click", "id=file6Income"],
-    ["type", "id=file6Income"],
     ["click", "linkText=다음단계(4/40)"],
     ["click", "id=file9"],
-    ["type", "id=file9"],
     ["click", "linkText=다음단계(4/40)"],
     ["click", "css=.scroll-a:nth-child(19) > .policy-agree"],
     ["click", "id=agreeyn1"],
@@ -333,11 +364,8 @@ var dictObject = {
     ["click", "css=#confirm_box #course_add_btn > span"],
     ["click", "id=same_phone_no"],
     ["click", "id=refundName"],
-    ["type", "id=refundName"],
     ["click", "id=bankName"],
-    ["type", "id=bankName"],
     ["click", "id=accountNo"],
-    ["type", "id=accountNo"],
     ["click", "css=div:nth-child(11)"],
     ["click", "css=p:nth-child(12) > label"],
     ["click", "linkText=결제하기"],
