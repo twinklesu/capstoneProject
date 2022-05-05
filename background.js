@@ -12,30 +12,28 @@ var imageUrl = chrome.runtime.getURL("scroll_image.png");
 // get message from popup when button clicked
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("get message in background");
-  getActionTuple(request.action);
+  getActionTuple(request.action, request.feature);
 });
 
-function getActionTuple(action) {
-  
+function getActionTuple(action, feature) {
   getStorage(); // get storage stored data
   setTimeout(function () {
-
     switch (action) {
-      case "민원 신청": {
-        console.log("민원 실행");
-        feature = "민원 신청 임시 저장";
-        break;
-      }
-      case "청년 임차 보증금 신청": {
-        console.log("청년 실행");
-        feature = "청년 임차 보증금 신청";
-        break;
-      }
-      case "평생 학습 수강 신청": {
-        console.log("평생 실행");
-        feature = "평생 학습 수강 신청";
-        break;
-      }
+      // case "민원 신청": {
+      //   console.log("민원 실행");
+      //   feature = "민원 신청 임시 저장";
+      //   break;
+      // }
+      // case "청년 임차 보증금 신청": {
+      //   console.log("청년 실행");
+      //   feature = "청년 임차 보증금 신청";
+      //   break;
+      // }
+      // case "평생 학습 수강 신청": {
+      //   console.log("평생 실행");
+      //   feature = "평생 학습 수강 신청";
+      //   break;
+      // }
 
       case "start": {
         // start
@@ -48,7 +46,7 @@ function getActionTuple(action) {
         chrome.storage.local.set({ pointer: 0 });
         break;
       }
-      
+
       case "pre": {
         // 이전
         // 스토리지 포인터 -1 해서 갱신
@@ -270,7 +268,7 @@ function sendMsgToPopup(msg) {
 // get tab id on load
 chrome.tabs.onUpdated.addListener(async () => {
   console.log(await getCurrentTab());
-})
+});
 
 async function getCurrentTab() {
   let queryOptions = { active: true, currentWindow: true };
