@@ -1,10 +1,28 @@
-$(function () {
+ $(function () {
   $("#start").on("click", function () {
     // 시작 버튼 눌렸을 때
     console.log("on click start");
+
     // 여기다가 코드 짜면 될듯!
-    ping("start", "피쳐이름"); // 시작 경우에만 feature 이름 설정해서 여기서만 넘겨주면 됨
+    var name;
+    //ping으로 넘겨주는 feature name 변수만 변경시켰음.
+    $("#민원 신청").on("click", function () {
+      console.log("on click sub1");
+      name = "민원 신청 임시 저장";
+    });
+    $("#청년 임차 보증금 신청").on("click", function () {
+      console.log("on click sub2");
+      name = "청년 임차 보증금 신청";
+    });
+    $("#평생 학습 수강 신청").on("click", function () {
+      console.log("on click sub3");
+      name = "평생 학습 수강 신청";
+    });
+  
+
+    ping("start", name); // 시작 경우에만 feature 이름 설정해서 여기서만 넘겨주면 됨
   });
+
   $("#pre").on("click", function () {
     console.log("on click pre");
     ping("pre", "");
