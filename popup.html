@@ -33,7 +33,29 @@
         box-shadow: 0 3px 3px rgba(71, 71, 69, 0.6);
 
       }
-      
+      .sub input[type=radio]{
+        display: none;
+
+      }
+      .sub input[type=radio]+label{
+        display: inline-block;
+        cursor: pointer;
+        height: 24px;
+        width: 220px;
+        border: 1px solid #333;
+        line-height: 24px;
+        text-align: center;
+        font-weight:bold;
+        font-size:13px;
+      }
+      .sub input[type=radio]+label{
+        background-color: #fff;
+        color: #333;
+      }
+      .sub input[type=radio]:checked+label{
+        background-color: #333;
+        color: #fff;
+    }
       
     </style>
   </head>
@@ -48,9 +70,10 @@
           
           <img src="fig/기능선택버튼.png" style= "max-width:100%">
           <ul class="sub">
-            <li id = "민원 신청"><button style="width: 220px; top: 10px; border: none;">민원 신청</button></li>
-            <li id = "청년 임차 보증금 신청"><button style="width: 220px; top: 10px; border: none; margin-top: 2px;">청년 임차 보증금 신청</button></li>
-            <li id = "평생 학습 수강 신청"><button style="width: 220px; top: 10px; border: none; margin-top: 2px;">평생 학습 수강 신청</button></li>
+            <li id = "sub1"><input type= "radio" class="sub" name="sub1" value="민원 신청 임시 저장"><label for="sub1">민원 신청 임시 저장</label></input></li> 
+            <!-- 음 이번엔 체크가 안먹네 내일해야지 -->
+            <li id = "sub2"><button style="width: 220px; top: 10px; border: none; margin-top: 2px;">청년 임차 보증금 신청</button></li>
+            <li id = "sub3"><button style="width: 220px; top: 10px; border: none; margin-top: 2px;">평생 학습 수강 신청</button></li>
           </ul>
         </li>
 

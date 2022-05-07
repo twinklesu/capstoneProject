@@ -12,29 +12,14 @@ var imageUrl = chrome.runtime.getURL("scroll_image.png");
 // get message from popup when button clicked
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("get message in background");
-  getActionTuple(request.action, request.feature);
+  getActionTuple(request.action, "민원 신청 임시 저장"); //  request.feature "민원 신청 임시 저장"
 });
 
 function getActionTuple(action, feature) {
   getStorage(); // get storage stored data
   setTimeout(function () {
     switch (action) {
-      // case "민원 신청": {
-      //   console.log("민원 실행");
-      //   feature = "민원 신청 임시 저장";
-      //   break;
-      // }
-      // case "청년 임차 보증금 신청": {
-      //   console.log("청년 실행");
-      //   feature = "청년 임차 보증금 신청";
-      //   break;
-      // }
-      // case "평생 학습 수강 신청": {
-      //   console.log("평생 실행");
-      //   feature = "평생 학습 수강 신청";
-      //   break;
-      // }
-
+      
       case "start": {
         // start
         // 스토리지에 포인터 0 으로 저장
