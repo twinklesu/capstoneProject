@@ -7,19 +7,16 @@ var intervalId;
 var preActionTuple;
 var scrollPointer = 0;
 
-var imageUrl = chrome.runtime.getURL("scroll_image.png");
-
 // get message from popup when button clicked
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("get message in background");
-  getActionTuple(request.action, "민원 신청 임시 저장"); //  request.feature "민원 신청 임시 저장"
+  console.log("(back) 선택된 기능: ", request.feature);
+  getActionTuple(request.action, request.feature); //  request.feature "민원 신청 임시 저장"
 });
 
 function getActionTuple(action, feature) {
   getStorage(); // get storage stored data
   setTimeout(function () {
     switch (action) {
-      
       case "start": {
         // start
         // 스토리지에 포인터 0 으로 저장
@@ -96,7 +93,6 @@ function getActionTuple(action, feature) {
       () => {}
     );
   }, 500);
-  return returnCode;
 }
 
 function getStorage() {
