@@ -20,7 +20,7 @@ $(function () {
       name = "평생 학습 수강 신청";
     });
 
-    var name = $(".select:checked").val(); // 라디오 버튼에서 체크된 값 가져오도록
+    // var name = $(".select:checked").val(); // 라디오 버튼에서 체크된 값 가져오도록
     console.log(name);
     ping("start", name); // 여기에 feature 넘겨주면 됨!
   });
