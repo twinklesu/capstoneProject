@@ -7,23 +7,22 @@ $(function () {
 
     // ping으로 넘겨주는 feature name 변수만 변경시켰음.
     var name;
-    $("#sub1").on("click", function () {
-      document.getElementById("sub1").checked = true; //클릭시 체크되도록
-      console.log("on click sub1");
+    $("#select1").on("click", function () {
+      console.log("on click select1");
       name = "민원 신청 임시 저장";
     });
-    $("#sub2").on("click", function () {
-      console.log("on click sub2");
+    $("#select2").on("click", function () {
+      console.log("on click select2");
       name = "청년 임차 보증금 신청";
     });
-    $("#sub3").on("click", function () {
-      console.log("on click sub3");
+    $("#select3").on("click", function () {
+      console.log("on click select3");
       name = "평생 학습 수강 신청";
     });
 
-    var name = $(".sub:checked").val(); // 라디오 버튼에서 체크된 값 가져오도록
-
-    ping("start", "평생 학습 수강 신청"); // 여기에 feature 넘겨주면 됨!
+    var name = $(".select:checked").val(); // 라디오 버튼에서 체크된 값 가져오도록
+    console.log(name);
+    ping("start", name); // 여기에 feature 넘겨주면 됨!
   });
 
   $("#pre").on("click", function () {
