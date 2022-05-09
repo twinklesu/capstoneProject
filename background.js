@@ -9,7 +9,7 @@ var scrollPointer = 0;
 
 // get message from popup when button clicked
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("(back) 선택된 기능: ", request.feature);
+  console.log("(back) 선택된 기능: ", request.feature); //여기에 피쳐네임 출력되면 전달된 것.
   getActionTuple(request.action, request.feature); //  request.feature "민원 신청 임시 저장"
 });
 
