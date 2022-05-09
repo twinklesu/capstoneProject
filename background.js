@@ -151,11 +151,12 @@ function tutorialMain(actionTuple, intervalId, preActionTuple, scrollPointer) {
       console.log(target);
       const tagType = target.split("=")[0];
       const tagIdentifier = target.split("=")[1];
+      var el;
       switch (tagType) {
         case "linkText":
           // find <a> tag with text
           xpath = "//a[text()='" + tagIdentifier + "']";
-          var el = document.evaluate(
+          el = document.evaluate(
             xpath,
             document,
             null,
@@ -165,7 +166,10 @@ function tutorialMain(actionTuple, intervalId, preActionTuple, scrollPointer) {
           break;
         case "id":
           // find element by id
-          var el = document.getElementById(tagIdentifier);
+          el = document.getElementById(tagIdentifier);
+          break;
+        case "css":
+          el = document.querySelector(tagIdentifier.split(" ")[0]);
           break;
       }
     }
@@ -213,11 +217,12 @@ function tutorialMain(actionTuple, intervalId, preActionTuple, scrollPointer) {
       console.log(target);
       const tagType = target.split("=")[0];
       const tagIdentifier = target.split("=")[1];
+      var el;
       switch (tagType) {
         case "linkText":
           // find <a> tag with text
           xpath = "//a[text()='" + tagIdentifier + "']";
-          var el = document.evaluate(
+          el = document.evaluate(
             xpath,
             document,
             null,
@@ -227,7 +232,10 @@ function tutorialMain(actionTuple, intervalId, preActionTuple, scrollPointer) {
           break;
         case "id":
           // find element by id
-          var el = document.getElementById(tagIdentifier);
+          el = document.getElementById(tagIdentifier);
+          break;
+        case "css":
+          el = document.querySelector(tagIdentifier.split(" ")[0]);
           break;
       }
       if (el !== null) {
@@ -334,9 +342,7 @@ var dictObject = {
   ],
   "평생 학습 수강 신청": [
     ["click", "css=.portal .ico_service"],
-    ["mouseOver", "css=.portal .ico_service"],
-    ["mouseOut", "css=.portal .ico_service"],
-    ["click", "css=.icon_item:nth-child(5) > img"],
+    ["click", "css=.icon_item:nth-child(4) > img"],
     ["click", "css=.btn_cate:nth-child(2)"],
     ["click", "css=.card_txt_box:nth-child(4) #custom_pdtName"],
     ["click", "id=request_regist"],
