@@ -9,29 +9,28 @@ $(function () {
     name = featureName;
     console.log("(popup) 이전에 선택된 기능: ", featureName);
     // 안골라도 선택된걸로 보이게,,,,,
-    switch(featureName) {
+    switch (featureName) {
       case "민원 신청 임시 저장": {
-        select1.checked=true;
-        console.log("(popup) 민원 신청 진행중")
+        select1.checked = true;
+        console.log("(popup) 민원 신청 진행중");
         break;
       }
-      case "청년 임차 보증금 신청":{
-        select2.checked=true;
-        console.log("(popup) 청년 임차 보증금 신청 진행중")
+      case "청년 임차 보증금 신청": {
+        select2.checked = true;
+        console.log("(popup) 청년 임차 보증금 신청 진행중");
         break;
       }
-      case "평생 학습 수강 신청": {
-        select3.checked=true;
-        console.log("(popup) 평생 학습 신청 진행중")
+      case "공공 시설 예약": {
+        select3.checked = true;
+        console.log("(popup) 공공 시설 예약 진행중");
         break;
       }
       default: {
-        select1.checked=false;
-        select2.checked=false;
-        select3.checked=false;
+        select1.checked = false;
+        select2.checked = false;
+        select3.checked = false;
       }
     }
-    
   }
   $("#select1").on("click", function () {
     console.log("on click select1");
@@ -43,7 +42,7 @@ $(function () {
   });
   $("#select3").on("click", function () {
     console.log("on click select3");
-    name = "평생 학습 수강 신청";
+    name = "공공 시설 예약";
   });
 
   // 기능 선택 없이 다른 버튼 누르면 예외 처리 필요
@@ -53,7 +52,6 @@ $(function () {
 
     // 여기서 feature 선택해서
 
-    
     ping("start", name); // 여기에 feature 넘겨주면 됨!
   });
 
