@@ -337,7 +337,7 @@ var dictObject = {
     ["click", "id=tmp_submit"],
   ],
   "청년 임차 보증금 신청": [
-    ["click", "css=.house .ico_service"],
+    ["click", "css=.house"],
     ["click", "linkText=주거 정책"],
     ["click", "linkText=청년 임차보증금 이자지원"],
     ["click", "linkText=임차보증금 이자지원사업 신규 신청하기 >"],
