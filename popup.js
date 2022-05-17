@@ -49,7 +49,6 @@ $(function () {
   $("#start").on("click", function () {
     // 시작 버튼 눌렸을 때
     console.log("on click start");
-
     // 여기서 feature 선택해서
 
     ping("start", name); // 여기에 feature 넘겨주면 됨!
@@ -82,5 +81,6 @@ function ping(msg, feature) {
 // background.js에서 메세지 받는 곳
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("get message in popup");
-  alert(request.action);
+  if (request.action !== "close popup") alert(request.action);
+  window.close(); // 버튼 누를때 팝업 닫힘
 });

@@ -84,6 +84,7 @@ function getActionTuple(action, feature) {
       preActionTuple = null;
     }
     chrome.storage.local.set({ pointer: pointer });
+    sendMsgToPopup("close popup");
 
     chrome.scripting.executeScript(
       {
@@ -338,8 +339,7 @@ var dictObject = {
   ],
   "청년 임차 보증금 신청": [
     ["click", "css=.house"],
-    ["click", "linkText=주거 정책"],
-    ["click", "linkText=청년 임차보증금 이자지원"],
+    ["click", "css=li:nth-child(1) .info-name"],
     ["click", "linkText=임차보증금 이자지원사업 신규 신청하기 >"],
     ["click", "id=rd13"],
     ["click", "id=rd07"],
