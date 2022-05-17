@@ -350,8 +350,8 @@ var dictObject = {
   "공공 시설 예약": [
     ["click", "linkText=평생학습포털"],
     ["click", "css=.icon_item:nth-child(4) > img"],
-    ["click", "css=.btn-top-menu"],
-    ["click", "linkText=학습공간예약"],
+    ["click", "id=allMenu"],
+    ["click", "css=.mylist:nth-child(4) li:nth-child(4) > a"],
     ["click", "css=.btn_cate:nth-child(1)"],
     ["click", "css=.cardView_box:nth-child(1) .mi_title"],
     ["click", "linkText=예약신청"],
