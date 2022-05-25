@@ -57,11 +57,8 @@ function getActionTuple(action, feature) {
         // 다음
         // 스토리지 포인터 +1 해서 갱신
         if (pointer + 1 === dictObject[featureName].length) {
-          if (pointer > 0) {
-            preActionTuple = dictObject[featureName][pointer - 1];
-          } else {
-            preActionTuple = null;
-          }
+          // 마지막
+          preActionTuple = dictObject[featureName][pointer];
           chrome.scripting.executeScript(
             {
               target: { tabId: tabId },
@@ -70,10 +67,19 @@ function getActionTuple(action, feature) {
             },
             () => {}
           );
-          sendMsgToPopup("마지막 스텝입니다.\n튜토리얼을 종료합니다");
+          // sendMsgToPopup("마지막 스텝입니다.\n튜토리얼을 종료합니다");
+          chrome.notifications.create("end", {
+            type: "basic",
+            iconUrl: "myself.png",
+            title: "Webigation",
+            message: "마지막 스텝입니다. \n튜토리얼을 종료합니다.",
+            priority: 2,
+            // buttons: [{ title: "okay" }],
+          });
           chrome.storage.local.clear();
           return;
         } else {
+          // 그냥 다음
           pointer += 1;
         }
         break;
