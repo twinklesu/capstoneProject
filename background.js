@@ -68,7 +68,7 @@ function getActionTuple(action, feature) {
             () => {}
           );
           // sendMsgToPopup("마지막 스텝입니다.\n튜토리얼을 종료합니다");
-          chrome.notifications.create("end", {
+          chrome.notifications.create(featureName + "_noti", {
             type: "basic",
             iconUrl: "myself.png",
             title: "Webigation",
@@ -266,11 +266,12 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
   var newIntervalId = generateShape(actionTuple);
   chrome.storage.local.set({ intervalId: String(newIntervalId) });
 
-  // function description
+  // function: adding class name for circle
   function addClassName(el) {
     el.classList.toggle("target-tag-red");
   }
 
+  // function: find tag in DOM
   function generateShape(actionTuple) {
     var newIntervalId;
     const action = actionTuple[0];
@@ -310,8 +311,28 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
           break;
       }
       if (el !== null) {
+        // color
         el.className += "target-tag-red";
         newIntervalId = setInterval(addClassName, 500, el);
+        // scrolling
+        var totalHeight = document.documentElement.clientHeight;
+        var elementY = el.getBoundingClientRect().top;
+        if (elementY < 0) {
+          // scroll up
+          console.log("(content) scroll up is required");
+          el.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        } else if (totalHeight < elementY) {
+          console.log("(content) scroll down in required");
+          el.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        }
       }
     }
     return newIntervalId;
@@ -370,7 +391,7 @@ var dictObject = {
     ["click", "css=.icon_item:nth-child(4) > img"],
     ["click", "id=allMenu"],
     ["click", "css=.mylist:nth-child(4) li:nth-child(4) > a"],
-    ["click", "css=.btn_cate:nth-child(1)"],
+    // ["click", "css=.btn_cate:nth-child(1)"],
     ["click", "css=.cardView_box:nth-child(1) .mi_title"],
     ["click", "linkText=예약신청"],
     ["click", "css=#cal_20220531 > .date"],
