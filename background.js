@@ -12,6 +12,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   getActionTuple(request.action, request.feature); //  request.feature "민원 신청 임시 저장"
 });
 
+// 단축키
+chrome.commands.onCommand.addListener((command) => {
+  if (command === "pre") {
+    console.log("keyboard short cut pre");
+    getActionTuple("pre", featureName);
+  }
+  if (command === "next") {
+    console.log("keyboard short cut next");
+    getActionTuple("next", featureName);
+  }
+});
+
 function getActionTuple(action, feature) {
   getStorage(); // get storage stored data
   setTimeout(function () {

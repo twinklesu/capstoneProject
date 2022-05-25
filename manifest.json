@@ -17,5 +17,21 @@
     "activeTab",
     "storage"
   ],
-  "host_permissions": ["http://*/", "https://*/"]
+  "host_permissions": ["http://*/", "https://*/"],
+  "commands": {
+    "pre": {
+      "suggested_key": {
+        "default": "Ctrl+Left"
+      },
+      "description": "pre keyboard short cut",
+      "global": true
+    },
+    "next": {
+      "suggested_key": {
+        "default": "Ctrl+Right"
+      },
+      "description": "next keyboard short cut",
+      "global": true
+    }
+  }
 }
