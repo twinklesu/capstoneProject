@@ -71,7 +71,7 @@ function getActionTuple(action, feature) {
           chrome.notifications.create(featureName + "_noti", {
             type: "basic",
             iconUrl: "myself.png",
-            title: "Webigation",
+            title: "Webigator",
             message: "마지막 스텝입니다. \n튜토리얼을 종료합니다.",
             priority: 2,
             // buttons: [{ title: "okay" }],
@@ -147,11 +147,7 @@ function clearTutorial(intervalId, preActionTuple) {
   // styleSheet.innerText = styles;
   // document.head.appendChild(styleSheet);
 
-  if (
-    intervalId !== null &&
-    intervalId !== undefined &&
-    preActionTuple !== null
-  ) {
+  if (intervalId !== null && intervalId !== undefined && preActionTuple !== null) {
     clearInterval(intervalId);
     const action = preActionTuple[0];
     const target = preActionTuple[1];
@@ -166,13 +162,7 @@ function clearTutorial(intervalId, preActionTuple) {
         case "linkText":
           // find <a> tag with text
           xpath = "//a[text()='" + tagIdentifier + "']";
-          el = document.evaluate(
-            xpath,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
         case "id":
           // find element by id
@@ -182,13 +172,7 @@ function clearTutorial(intervalId, preActionTuple) {
           el = document.querySelector(tagIdentifier);
           break;
         case "xpath":
-          el = document.evaluate(
-            tagIdentifier,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(tagIdentifier, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
       }
     }
@@ -213,11 +197,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
   document.head.appendChild(styleSheet);
 
   console.log("interval to clear: " + intervalId);
-  if (
-    intervalId !== null &&
-    intervalId !== undefined &&
-    preActionTuple !== null
-  ) {
+  if (intervalId !== null && intervalId !== undefined && preActionTuple !== null) {
     clearInterval(intervalId);
     const action = preActionTuple[0];
     const target = preActionTuple[1];
@@ -232,13 +212,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
         case "linkText":
           // find <a> tag with text
           xpath = "//a[text()='" + tagIdentifier + "']";
-          el = document.evaluate(
-            xpath,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
         case "id":
           // find element by id
@@ -248,13 +222,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
           el = document.querySelector(tagIdentifier);
           break;
         case "xpath":
-          el = document.evaluate(
-            tagIdentifier,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(tagIdentifier, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
       }
     }
@@ -285,13 +253,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
         case "linkText":
           // find <a> tag with text
           xpath = "//a[text()='" + tagIdentifier + "']";
-          el = document.evaluate(
-            xpath,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
         case "id":
           // find element by id
@@ -301,13 +263,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
           el = document.querySelector(tagIdentifier);
           break;
         case "xpath":
-          el = document.evaluate(
-            tagIdentifier,
-            document,
-            null,
-            XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
-          ).singleNodeValue;
+          el = document.evaluate(tagIdentifier, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           break;
       }
       if (el !== null) {
@@ -325,7 +281,7 @@ function tutorialMain(actionTuple, intervalId, preActionTuple) {
             block: "center",
             inline: "nearest",
           });
-        } else if (totalHeight < elementY) {
+        } else if (totalHeight - 20 < elementY) {
           console.log("(content) scroll down in required");
           el.scrollIntoView({
             behavior: "smooth",
@@ -372,13 +328,12 @@ var dictObject = {
     ["click", "id=OPEN_AGRE_N"],
     ["click", "id=SAFERPRT_N"],
     ["click", "id=AFTER_RESULT_N"],
-    ["click", "id=PROPSE_CHG_AGRE_N"],
     ["click", "id=PERSON_INFO_YN"],
     ["click", "id=tmp_submit"],
   ],
   "청년 임차 보증금 신청": [
     ["click", "css=.house"],
-    ["click", "css=li:nth-child(1) .info-name"],
+    ["click", "css=li:nth-child(3) > .box img"],
     ["click", "linkText=임차보증금 이자지원사업 신규 신청하기 >"],
     ["click", "id=rd13"],
     ["click", "id=rd07"],
@@ -391,6 +346,7 @@ var dictObject = {
     ["click", "css=.icon_item:nth-child(4) > img"],
     ["click", "id=allMenu"],
     ["click", "css=.mylist:nth-child(4) li:nth-child(4) > a"],
+    // ["click", "linkText=공공예약"],
     // ["click", "css=.btn_cate:nth-child(1)"],
     ["click", "css=.cardView_box:nth-child(1) .mi_title"],
     ["click", "linkText=예약신청"],
