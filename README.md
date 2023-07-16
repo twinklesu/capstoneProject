@@ -34,7 +34,8 @@
 
 ### Minor Issues
 
-- log in to Seoul City Hall website is neccessary in advance to use _Webigator_
-- `민원 신청 임시 저장` doesn't submit any complaint. It just store a complaint temporarily.
-- `청년 임차 보증금 신청` tutorial ends in the middle not to apply for real.
-- `공공 시설 예약` is help reserving the first facility. The available facility and reservation wesite changes often. The data was collected in May, and it might not work these days.
+- log in to the Seoul City Hall website is required in advance to use _Webigator_
+- Each task ends before real completion since _Webigator_ is a demo application.
+  - `민원 신청 임시 저장` tutorial doesn't submit any complaints. It guides you to store a complaint temporarily.
+  - `청년 임차 보증금 신청` tutorial ends before clicking apply button for real.
+  - `공공 시설 예약` tutorial helps to reserve the first facility. The available facility and reservation website are changed often. The data was collected in May 2022, and it might not work these days.
